@@ -1,15 +1,17 @@
 import { styled } from "styled-components";
 import NoticeNav from "../../components/notice/NoticeNav";
+import NoticePageBar from "../../components/notice/NoticePageBar";
 import NoticePreviewComponent from "../../components/notice/NoticePreviewComponent";
-import { dummyPreviewPosts } from "../../constants/notice";
+import { DUMMYPREVIEWPOSTS } from "../../constants/notice";
 
 const Notice = () => {
   return (
     <Container>
       <NoticeNav />
-      {dummyPreviewPosts.map((preview, key) => (
+      {DUMMYPREVIEWPOSTS.map((preview, key) => (
         <NoticePreviewComponent preview={preview} key={key} />
       ))}
+      <NoticePageBar />
     </Container>
   );
 };
