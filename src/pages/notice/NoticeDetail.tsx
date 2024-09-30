@@ -1,15 +1,24 @@
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import Button from "../../components/Button";
+import Modal from "../../components/Modal";
 import { DUMMYCONTENT } from "../../constants/notice/dummyPostContent";
 
 const NoticeDetail = () => {
   const navigator = useNavigate();
   const queryParams = new URLSearchParams(location.search);
   const page = queryParams.get("page");
+  const [isShowModal, setIsShowModal] = useState<boolean>(false);
+  const [isShowDeleteModal, setIsShowDeleteModal] = useState<boolean>(false);
 
   const handleMoveEditPage = () => {
     navigator(`/noticeEdit?page=${page}`);
+  };
+
+  const handleRemoveNotice = () => {
+    setIsShowModal(false);
+    setIsShowDeleteModal(true);
   };
 
   return (
@@ -21,8 +30,24 @@ const NoticeDetail = () => {
       </Container>
       <ButtonContainer>
         <Button title={"수정"} onClick={handleMoveEditPage} />
-        <Button title={"삭제"} />
+        <Button title={"삭제"} onClick={() => setIsShowModal(true)} />
       </ButtonContainer>
+      {isShowModal && (
+        <Modal
+          title={"공지를 삭제하시겠습니까?"}
+          whiteText="취소"
+          onWhiteButton={() => setIsShowModal(false)}
+          blackText="삭제"
+          onBlackButton={handleRemoveNotice}
+        />
+      )}
+      {isShowDeleteModal && (
+        <Modal
+          title={"공지가 삭제되었습니다."}
+          blackText="홈으로 돌아가기"
+          onBlackButton={() => navigator("/")}
+        />
+      )}
     </>
   );
 };

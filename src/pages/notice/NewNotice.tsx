@@ -1,7 +1,12 @@
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import Button from "../../components/Button";
+import Modal from "../../components/Modal";
 
 const NewNotice = () => {
+  const [isShowModal, setIsShowModal] = useState<boolean>(false);
+  const navigator = useNavigate();
   return (
     <Container>
       <Label>공지 제목 작성</Label>
@@ -9,8 +14,17 @@ const NewNotice = () => {
       <Label>공지 글 작성</Label>
       <ContentInput placeholder="공지 글을 작성하여 주세요." />
       <ButtonContainer>
-        <Button title={"게시"} />
+        <Button title={"게시"} onClick={() => setIsShowModal(true)} />
       </ButtonContainer>
+      {isShowModal && (
+        <Modal
+          title={"게시 완료"}
+          whiteText="공지 보러 가기"
+          onWhiteButton={() => navigator("/notice?page=1")}
+          blackText="홈으로 돌아가기"
+          onBlackButton={() => navigator("/")}
+        />
+      )}
     </Container>
   );
 };

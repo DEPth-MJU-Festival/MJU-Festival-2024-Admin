@@ -1,10 +1,14 @@
 import { useState } from "react"; // useState를 import
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import Button from "../../components/Button";
+import Modal from "../../components/Modal";
 
 const NoticeEdit = () => {
   const [title, setTitle] = useState("제목제목제목제목");
   const [content, setContent] = useState("내용내용내용내용");
+  const [isShowModal, setIsShowModal] = useState<boolean>(false);
+  const navigator = useNavigate();
 
   return (
     <Container>
@@ -23,8 +27,17 @@ const NoticeEdit = () => {
         onChange={(e) => setContent(e.target.value)}
       />
       <ButtonContainer>
-        <Button title={"게시"} />
+        <Button title={"게시"} onClick={() => setIsShowModal(true)} />
       </ButtonContainer>
+      {isShowModal && (
+        <Modal
+          title={"게시 완료"}
+          whiteText="공지 보러 가기"
+          onWhiteButton={() => navigator("/notice?page=1")}
+          blackText="홈으로 돌아가기"
+          onBlackButton={() => navigator("/")}
+        />
+      )}
     </Container>
   );
 };

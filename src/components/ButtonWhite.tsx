@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-const Button = ({
+const ButtonWhite = ({
   title,
   onClick,
 }: {
@@ -10,14 +10,14 @@ const Button = ({
   return <WriteButton onClick={onClick}>{title}</WriteButton>;
 };
 
-export default Button;
+export default ButtonWhite;
 
 const WriteButton = styled.button`
-  background-color: black;
+  background-color: White;
   width: 180px;
   height: 50px;
   border-radius: 100px;
-  color: white;
+  color: black;
   font-size: 22px;
   margin-left: 20px;
   cursor: pointer;
