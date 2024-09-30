@@ -8,8 +8,8 @@ const Notice = () => {
   return (
     <Container>
       <NoticeNav />
-      {DUMMYPREVIEWPOSTS.map((preview, key) => (
-        <NoticePreviewComponent preview={preview} key={key} />
+      {DUMMYPREVIEWPOSTS.map((preview, index) => (
+        <NoticePreviewComponent preview={preview} key={index} page={index} />
       ))}
       <NoticePageBar />
     </Container>

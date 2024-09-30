@@ -6,7 +6,7 @@ import { DUMMYPREVIEWPOSTS } from "../../constants/notice";
 
 /*
     API 가 어떻게 나올지 모르겠음 페이지 전환 기능을 포함시킬 수도 있기때문에 아직 postList를 자르지 않았음.
-  */
+*/
 
 const NoticePageBar = () => {
   const [searchParams, setSearchParams] = useSearchParams();

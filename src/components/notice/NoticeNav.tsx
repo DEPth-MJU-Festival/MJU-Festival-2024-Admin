@@ -1,10 +1,12 @@
+import { useNavigate } from "react-router-dom";
 import { styled } from "styled-components";
 
 const NoticeNav = () => {
+  const navigate = useNavigate();
   return (
     <Container>
       <Title>공지사항</Title>
-      <WriteButton>글쓰기</WriteButton>
+      <WriteButton onClick={() => navigate("/newNotice")}>글쓰기</WriteButton>
     </Container>
   );
 };
@@ -36,4 +38,5 @@ const WriteButton = styled.button`
   color: white;
   font-size: 22px;
   margin-left: 20px;
+  cursor: pointer;
 `;

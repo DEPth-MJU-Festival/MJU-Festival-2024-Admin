@@ -1,13 +1,20 @@
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { NoticePreviewProp } from "../../types/notice";
 
 const NoticePreviewComponent = ({
   preview,
+  page,
 }: {
   preview: NoticePreviewProp;
+  page: number;
 }) => {
+  const navigator = useNavigate();
+  const handleMoveNoticeDetail = () => {
+    navigator(`/noticeDetail?page=${page}`);
+  };
   return (
-    <Conatiner>
+    <Conatiner onClick={handleMoveNoticeDetail}>
       <Title>{preview.title}</Title>
       <Preview>{preview.preview}</Preview>
       <Date>{preview.date}</Date>
@@ -24,6 +31,7 @@ const Conatiner = styled.div`
   padding-bottom: 20px;
   width: 100%;
   border-bottom: black solid 1px;
+  cursor: pointer;
 `;
 
 const Title = styled.p`
