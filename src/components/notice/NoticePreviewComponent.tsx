@@ -13,18 +13,24 @@ const NoticePreviewComponent = ({
   const handleMoveNoticeDetail = () => {
     navigator(`/noticeDetail?noticeId=${content.noticeId}`);
   };
+
+  // 126자를 초과하는 경우 잘라내고 '...' 추가
+  const truncateContent = (text: string | null | undefined) => {
+    return text && text.length > 126 ? text.slice(0, 126) + "..." : text || "";
+  };
+
   return (
-    <Conatiner onClick={handleMoveNoticeDetail}>
+    <Container onClick={handleMoveNoticeDetail}>
       <Title>{content.title}</Title>
-      <Preview>{content.content}</Preview>
+      <Preview>{truncateContent(content.content)}</Preview>
       <Date>{content.createdDate}</Date>
-    </Conatiner>
+    </Container>
   );
 };
 
 export default NoticePreviewComponent;
 
-const Conatiner = styled.div`
+const Container = styled.div`
   display: flex;
   flex-direction: column;
   gap: 15px;
@@ -36,15 +42,17 @@ const Conatiner = styled.div`
 
 const Title = styled.p`
   font-weight: bold;
-  font-size: 22;
+  font-size: 22px;
   margin: 0;
 `;
+
 const Preview = styled.p`
-  font-size: 16;
+  font-size: 16px;
   font-weight: lighter;
   margin: 0;
 `;
+
 const Date = styled.p`
-  font-size: 14;
+  font-size: 14px;
   margin: 0;
 `;
