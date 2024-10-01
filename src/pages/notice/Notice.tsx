@@ -1,15 +1,27 @@
+import { useEffect } from "react";
+import { useSearchParams } from "react-router-dom";
 import { styled } from "styled-components";
 import NoticeNav from "../../components/notice/NoticeNav";
 import NoticePageBar from "../../components/notice/NoticePageBar";
 import NoticePreviewComponent from "../../components/notice/NoticePreviewComponent";
-import { DUMMYPREVIEWPOSTS } from "../../constants/notice";
+import { useGetNotice } from "../../hooks/notices";
 
 const Notice = () => {
+  const [searchParams] = useSearchParams();
+  const page = searchParams.get("page") || "1";
+
+  const { data, refetch } = useGetNotice(Number(page), 6);
+  const noticeList = data.data.information.dataList;
+
+  useEffect(() => {
+    refetch();
+  }, [page, refetch]);
+
   return (
     <Container>
       <NoticeNav />
-      {DUMMYPREVIEWPOSTS.map((preview, index) => (
-        <NoticePreviewComponent preview={preview} key={index} page={index} />
+      {noticeList.map((content, index) => (
+        <NoticePreviewComponent content={content} key={index} page={page!} />
       ))}
       <NoticePageBar />
     </Container>
