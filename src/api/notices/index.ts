@@ -18,3 +18,9 @@ export async function postNotice(
   };
   return await api.post(`api/v1/notices`, notice);
 }
+
+export async function getNoticeDetail(
+  noticeId: string
+): Promise<NoticeResponse> {
+  return await api.get(`api/v1/notices/${noticeId}`);
+}

@@ -21,3 +21,18 @@ export interface NoticeResponse {
   headers: Record<string, string>;
   config: Record<string, any>;
 }
+
+// #---------------------------------------------------------------------------
+
+interface NoticeDetailResponseData {
+  check: boolean;
+  information: Notice;
+}
+
+export interface NoticeResponseDetail {
+  data: NoticeDetailResponseData;
+  status: number;
+  statusText: string;
+  headers: Record<string, string>;
+  config: Record<string, any>;
+}

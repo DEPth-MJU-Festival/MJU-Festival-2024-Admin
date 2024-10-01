@@ -10,8 +10,9 @@ const Notice = () => {
   const [searchParams] = useSearchParams();
   const page = searchParams.get("page") || "1";
 
-  const { data, refetch } = useGetNotice(Number(page), 6);
-  const noticeList = data.data.information.dataList;
+  const { data, refetch, isLoading, error } = useGetNotice(Number(page), 6);
+
+  const noticeList = data?.data?.information?.dataList || [];
 
   useEffect(() => {
     refetch();
@@ -20,9 +21,15 @@ const Notice = () => {
   return (
     <Container>
       <NoticeNav />
-      {noticeList.map((content, index) => (
-        <NoticePreviewComponent content={content} key={index} page={page!} />
-      ))}
+      {isLoading && <LoadingMessage>로딩 중입니다...</LoadingMessage>}
+      {error && <ErrorMessage>오류 발생: {error.message}</ErrorMessage>}
+      {noticeList.length > 0 ? (
+        noticeList.map((content, index) => (
+          <NoticePreviewComponent content={content} key={index} page={page!} />
+        ))
+      ) : (
+        <NoNoticeMessage>공지사항이 없습니다.</NoNoticeMessage>
+      )}
       <NoticePageBar />
     </Container>
   );
@@ -37,4 +44,19 @@ const Container = styled.div`
   flex-direction: column;
   margin: 0 15%;
   gap: 30px;
+`;
+
+const LoadingMessage = styled.div`
+  font-size: 18px;
+  color: gray;
+`;
+
+const ErrorMessage = styled.div`
+  font-size: 18px;
+  color: red;
+`;
+
+const NoNoticeMessage = styled.div`
+  font-size: 18px;
+  color: black;
 `;

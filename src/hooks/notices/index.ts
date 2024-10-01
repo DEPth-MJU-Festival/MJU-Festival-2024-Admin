@@ -3,8 +3,8 @@ import {
   useSuspenseQuery,
   UseSuspenseQueryResult,
 } from "@tanstack/react-query";
-import { getNotices, postNotice } from "../../api/notices";
-import { NoticeResponse } from "../../types/notice";
+import { getNoticeDetail, getNotices, postNotice } from "../../api/notices";
+import { NoticeResponse, NoticeResponseDetail } from "../../types/notice";
 
 export function useGetNotice(
   page: number,
@@ -23,4 +23,14 @@ export function usePostNotice() {
       mutationFn: ({ title, content }) => postNotice(title, content),
     }
   );
+}
+
+export function useGetNoticeDetail(
+  noticeId: string
+): UseSuspenseQueryResult<NoticeResponseDetail, Error> {
+  const QUERY_KEY = "NoticeDetail";
+  return useSuspenseQuery({
+    queryKey: [QUERY_KEY],
+    queryFn: () => getNoticeDetail(noticeId),
+  });
 }

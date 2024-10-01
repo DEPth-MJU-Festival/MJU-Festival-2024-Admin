@@ -11,7 +11,7 @@ const NoticePreviewComponent = ({
 }) => {
   const navigator = useNavigate();
   const handleMoveNoticeDetail = () => {
-    navigator(`/noticeDetail?page=${page}`);
+    navigator(`/noticeDetail?noticeId=${content.noticeId}`);
   };
   return (
     <Conatiner onClick={handleMoveNoticeDetail}>

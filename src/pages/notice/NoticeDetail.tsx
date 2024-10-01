@@ -3,17 +3,20 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import Button from "../../components/Button";
 import Modal from "../../components/Modal";
-import { DUMMYCONTENT } from "../../constants/notice/dummyPostContent";
+import { useGetNoticeDetail } from "../../hooks/notices";
 
 const NoticeDetail = () => {
   const navigator = useNavigate();
   const queryParams = new URLSearchParams(location.search);
-  const page = queryParams.get("page");
+  const noticeId = queryParams.get("noticeId");
   const [isShowModal, setIsShowModal] = useState<boolean>(false);
   const [isShowDeleteModal, setIsShowDeleteModal] = useState<boolean>(false);
 
+  const { data, isLoading } = useGetNoticeDetail(noticeId!);
+  const noticeDetail = data.data.information;
+
   const handleMoveEditPage = () => {
-    navigator(`/noticeEdit?page=${page}`);
+    navigator(`/noticeEdit?noticeId=${noticeId}`);
   };
 
   const handleRemoveNotice = () => {
@@ -23,30 +26,36 @@ const NoticeDetail = () => {
 
   return (
     <>
-      <Container>
-        <Title>게시글 제목</Title>
-        <Time>YYYY/MM/DD 13:00</Time>
-        <Content>{DUMMYCONTENT}</Content>
-      </Container>
-      <ButtonContainer>
-        <Button title={"수정"} onClick={handleMoveEditPage} />
-        <Button title={"삭제"} onClick={() => setIsShowModal(true)} />
-      </ButtonContainer>
-      {isShowModal && (
-        <Modal
-          title={"공지를 삭제하시겠습니까?"}
-          whiteText="취소"
-          onWhiteButton={() => setIsShowModal(false)}
-          blackText="삭제"
-          onBlackButton={handleRemoveNotice}
-        />
-      )}
-      {isShowDeleteModal && (
-        <Modal
-          title={"공지가 삭제되었습니다."}
-          blackText="홈으로 돌아가기"
-          onBlackButton={() => navigator("/")}
-        />
+      {isLoading ? (
+        <LoadingMessage>로딩 중입니다...</LoadingMessage>
+      ) : (
+        <>
+          <Container>
+            <Title>{noticeDetail.title}</Title>
+            <Time>{noticeDetail.createdDate}</Time>
+            <Content>{noticeDetail.content}</Content>
+          </Container>
+          <ButtonContainer>
+            <Button title={"수정"} onClick={handleMoveEditPage} />
+            <Button title={"삭제"} onClick={() => setIsShowModal(true)} />
+          </ButtonContainer>
+          {isShowModal && (
+            <Modal
+              title={"공지를 삭제하시겠습니까?"}
+              whiteText="취소"
+              onWhiteButton={() => setIsShowModal(false)}
+              blackText="삭제"
+              onBlackButton={handleRemoveNotice}
+            />
+          )}
+          {isShowDeleteModal && (
+            <Modal
+              title={"공지가 삭제되었습니다."}
+              blackText="홈으로 돌아가기"
+              onBlackButton={() => navigator("/")}
+            />
+          )}
+        </>
       )}
     </>
   );
@@ -77,10 +86,16 @@ const Time = styled.p`
 const Content = styled.p`
   font-size: 16px;
   margin: 1;
+  white-space: pre-wrap;
 `;
 
 const ButtonContainer = styled.div`
   display: flex;
   justify-content: center;
   gap: 20px;
+`;
+
+const LoadingMessage = styled.div`
+  font-size: 18px;
+  color: gray;
 `;
