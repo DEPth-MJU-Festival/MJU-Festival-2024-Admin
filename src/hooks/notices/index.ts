@@ -3,7 +3,12 @@ import {
   useSuspenseQuery,
   UseSuspenseQueryResult,
 } from "@tanstack/react-query";
-import { getNoticeDetail, getNotices, postNotice } from "../../api/notices";
+import {
+  deleteNotice,
+  getNoticeDetail,
+  getNotices,
+  postNotice,
+} from "../../api/notices";
 import { NoticeResponse, NoticeResponseDetail } from "../../types/notice";
 
 export function useGetNotice(
@@ -32,5 +37,11 @@ export function useGetNoticeDetail(
   return useSuspenseQuery({
     queryKey: [QUERY_KEY],
     queryFn: () => getNoticeDetail(noticeId),
+  });
+}
+
+export function useDeleteNotice() {
+  return useMutation<NoticeResponse, Error, { noticeId: string }>({
+    mutationFn: ({ noticeId }) => deleteNotice(noticeId),
   });
 }

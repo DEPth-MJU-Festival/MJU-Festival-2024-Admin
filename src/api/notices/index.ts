@@ -24,3 +24,7 @@ export async function getNoticeDetail(
 ): Promise<NoticeResponse> {
   return await api.get(`api/v1/notices/${noticeId}`);
 }
+
+export async function deleteNotice(noticeId: string): Promise<NoticeResponse> {
+  return await api.delete(`api/v1/notices/${noticeId}`);
+}

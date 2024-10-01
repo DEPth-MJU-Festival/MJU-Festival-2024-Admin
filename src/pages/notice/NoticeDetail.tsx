@@ -3,17 +3,19 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import Button from "../../components/Button";
 import Modal from "../../components/Modal";
-import { useGetNoticeDetail } from "../../hooks/notices";
+import { useDeleteNotice, useGetNoticeDetail } from "../../hooks/notices";
 
 const NoticeDetail = () => {
   const navigator = useNavigate();
   const queryParams = new URLSearchParams(location.search);
-  const noticeId = queryParams.get("noticeId");
+  const noticeId = queryParams.get("noticeId")!;
   const [isShowModal, setIsShowModal] = useState<boolean>(false);
   const [isShowDeleteModal, setIsShowDeleteModal] = useState<boolean>(false);
 
   const { data, isLoading } = useGetNoticeDetail(noticeId!);
   const noticeDetail = data.data.information;
+
+  const { mutate: deleteNotice } = useDeleteNotice();
 
   const handleMoveEditPage = () => {
     navigator(`/noticeEdit?noticeId=${noticeId}`);
@@ -21,7 +23,18 @@ const NoticeDetail = () => {
 
   const handleRemoveNotice = () => {
     setIsShowModal(false);
-    setIsShowDeleteModal(true);
+
+    deleteNotice(
+      { noticeId },
+      {
+        onSuccess: () => {
+          setIsShowDeleteModal(true);
+        },
+        onError: (error) => {
+          console.error("공지 등록 실패:", error);
+        },
+      }
+    );
   };
 
   return (
