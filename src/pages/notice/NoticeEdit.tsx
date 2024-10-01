@@ -1,14 +1,36 @@
 import { useState } from "react"; // useState를 import
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import styled from "styled-components";
 import Button from "../../components/Button";
 import Modal from "../../components/Modal";
+import { useGetNoticeDetail, usePutNotice } from "../../hooks/notices";
 
 const NoticeEdit = () => {
-  const [title, setTitle] = useState("제목제목제목제목");
-  const [content, setContent] = useState("내용내용내용내용");
+  const [searchParams] = useSearchParams();
+  const noticeId = searchParams.get("noticeId")!;
+  const { data } = useGetNoticeDetail(noticeId!);
+  const noticeDetail = data.data.information;
+
+  const [title, setTitle] = useState(noticeDetail.title);
+  const [content, setContent] = useState(noticeDetail.content);
   const [isShowModal, setIsShowModal] = useState<boolean>(false);
   const navigator = useNavigate();
+
+  const { mutate: editNotice } = usePutNotice();
+
+  const handleEditNotice = () => {
+    editNotice(
+      { title, content, noticeId },
+      {
+        onSuccess: () => {
+          setIsShowModal(true);
+        },
+        onError: (error) => {
+          console.error("공지 등록 실패:", error);
+        },
+      }
+    );
+  };
 
   return (
     <Container>
@@ -27,7 +49,7 @@ const NoticeEdit = () => {
         onChange={(e) => setContent(e.target.value)}
       />
       <ButtonContainer>
-        <Button title={"게시"} onClick={() => setIsShowModal(true)} />
+        <Button title={"게시"} onClick={handleEditNotice} />
       </ButtonContainer>
       {isShowModal && (
         <Modal

@@ -28,3 +28,15 @@ export async function getNoticeDetail(
 export async function deleteNotice(noticeId: string): Promise<NoticeResponse> {
   return await api.delete(`api/v1/notices/${noticeId}`);
 }
+
+export async function putNotice(
+  title: string,
+  content: string,
+  noticeId: string
+): Promise<NoticeResponse> {
+  const notice = {
+    title: title,
+    content: content,
+  };
+  return await api.put(`api/v1/notices/${noticeId}`, notice);
+}

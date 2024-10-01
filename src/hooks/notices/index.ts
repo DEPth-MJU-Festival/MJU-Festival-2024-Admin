@@ -8,6 +8,7 @@ import {
   getNoticeDetail,
   getNotices,
   postNotice,
+  putNotice,
 } from "../../api/notices";
 import { NoticeResponse, NoticeResponseDetail } from "../../types/notice";
 
@@ -43,5 +44,16 @@ export function useGetNoticeDetail(
 export function useDeleteNotice() {
   return useMutation<NoticeResponse, Error, { noticeId: string }>({
     mutationFn: ({ noticeId }) => deleteNotice(noticeId),
+  });
+}
+
+export function usePutNotice() {
+  return useMutation<
+    NoticeResponse,
+    Error,
+    { title: string; content: string; noticeId: string }
+  >({
+    mutationFn: ({ title, content, noticeId }) =>
+      putNotice(title, content, noticeId),
   });
 }
