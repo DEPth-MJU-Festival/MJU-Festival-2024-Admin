@@ -2,6 +2,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Suspense } from "react";
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import HomePage from "./pages/home/HomePage";
+import LostItem from "./pages/lostItem/LostItem";
 import NewNotice from "./pages/notice/NewNotice";
 import Notice from "./pages/notice/Notice";
 import NoticeDetail from "./pages/notice/NoticeDetail";
@@ -27,7 +28,7 @@ const App = () => {
             <Route path="/newNotice" element={<NewNotice />} />
             <Route path="/noticeDetail" element={<NoticeDetail />} />
             <Route path="/noticeEdit" element={<NoticeEdit />} />
-            {/* <Route path="/listItem" element={<HomePage />} /> */}
+            <Route path="/lostItem" element={<LostItem />} />
           </Routes>
         </Router>
       </Suspense>
