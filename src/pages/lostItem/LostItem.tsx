@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { styled } from "styled-components";
+import { deleteItem } from "../../api/item";
 import AddLostItem from "../../components/lostItem/AddLostItem";
 import LostItemBanner from "../../components/lostItem/LostItemBanner";
 import LostItemComponent from "../../components/lostItem/LostItemComponent";
@@ -18,13 +19,28 @@ const LostItem = () => {
 
   const ItemsList = data.data.information;
 
+  const handleDeleteItem = async (itemId: string) => {
+    try {
+      await deleteItem(itemId);
+      alert("분실물이 성공적으로 삭제되었습니다.");
+      refetch();
+    } catch (error) {
+      console.error("Error deleting item:", error);
+      alert("삭제하는 중 오류가 발생했습니다.");
+    }
+  };
+
   return (
     <Container>
       <LostItemBanner />
       <LostItemNav naviTap={naviTap} setNaviTap={setNaviTap} />
       <ItemContainer>
         {ItemsList.map((item, index) => (
-          <LostItemComponent item={item} key={index} />
+          <LostItemComponent
+            item={item}
+            key={index}
+            onDelete={handleDeleteItem}
+          />
         ))}
         {/* 마지막 아이템 컴포넌트 옆에 추가 아이템 버튼을 배치 */}
         <AddLostItem />

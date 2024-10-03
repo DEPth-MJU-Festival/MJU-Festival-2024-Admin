@@ -1,14 +1,39 @@
+import { useState } from "react";
 import { styled } from "styled-components";
 import { LostItem } from "../../types/lostItem/lostItem";
+import Modal from "../Modal";
 
-const LostItemComponent = ({ item }: { item: LostItem }) => {
+const LostItemComponent = ({
+  item,
+  onDelete,
+}: {
+  item: LostItem;
+  onDelete: (itemId: string) => void;
+}) => {
+  const [isShowModal, setIsShowModal] = useState<boolean>(false);
+
+  const handleDeleteItem = async () => {
+    onDelete(item.id.toString());
+    setIsShowModal(false);
+  };
   return (
-    <Container>
-      <ImageContainer>
-        <Image src={item.imageUrl} />
-      </ImageContainer>
-      <Name>{item.title}</Name>
-    </Container>
+    <>
+      <Container onClick={() => setIsShowModal(true)}>
+        <ImageContainer>
+          <Image src={item.imageUrl} />
+        </ImageContainer>
+        <Name>{item.title}</Name>
+      </Container>
+      {isShowModal && (
+        <Modal
+          title="해당 분실물 게시글을 삭제하시겠습니까?"
+          whiteText="취소"
+          blackText="삭제"
+          onWhiteButton={() => setIsShowModal(false)}
+          onBlackButton={handleDeleteItem}
+        />
+      )}
+    </>
   );
 };
 
@@ -21,6 +46,7 @@ export const Container = styled.div`
   text-align: center;
   align-items: center;
   margin: 10px;
+  cursor: pointer;
 `;
 
 export const ImageContainer = styled.div`

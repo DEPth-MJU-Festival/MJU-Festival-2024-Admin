@@ -12,3 +12,7 @@ export async function postItem(formData: FormData): Promise<LostItem> {
     },
   });
 }
+
+export async function deleteItem(itemId: string): Promise<LostItem> {
+  return await api.delete(`api/v1/items/${itemId}`);
+}

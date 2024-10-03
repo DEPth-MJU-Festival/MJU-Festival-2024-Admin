@@ -31,7 +31,7 @@ const NoticeDetail = () => {
           setIsShowDeleteModal(true);
         },
         onError: (error) => {
-          console.error("공지 등록 실패:", error);
+          console.error("공지 삭제 실패:", error);
         },
       }
     );
