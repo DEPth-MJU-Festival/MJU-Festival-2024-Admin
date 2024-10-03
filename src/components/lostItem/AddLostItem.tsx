@@ -1,18 +1,17 @@
+import { useNavigate } from "react-router-dom";
 import { styled } from "styled-components";
-import { LostItem } from "../../types/lostItem/lostItem";
 
-const LostItemComponent = ({ item }: { item: LostItem }) => {
+const AddLostItem = () => {
+  const navigator = useNavigate();
   return (
-    <Container>
-      <ImageContainer>
-        <Image src={item.imageUrl} />
-      </ImageContainer>
-      <Name>{item.title}</Name>
+    <Container onClick={() => navigator("/newLostItem")}>
+      <ImageContainer>+</ImageContainer>
+      <Name>분실물 추가</Name>
     </Container>
   );
 };
 
-export default LostItemComponent;
+export default AddLostItem;
 
 export const Container = styled.div`
   height: auto;
@@ -21,15 +20,17 @@ export const Container = styled.div`
   text-align: center;
   align-items: center;
   margin: 10px;
+  cursor: pointer;
 `;
 
 export const ImageContainer = styled.div`
   width: 200px;
   height: 300px;
-  background: rgba(255, 255, 255, 0.7);
+  background: rgba(255, 255, 255);
   border-radius: 5px;
   border: 1px solid #d0d0d0;
   box-shadow: 0 4px 10px rgba(141, 166, 212, 0.3);
+  font-size: 50px;
   display: flex;
   justify-content: center;
   align-items: center;

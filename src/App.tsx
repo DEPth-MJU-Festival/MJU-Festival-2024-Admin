@@ -3,6 +3,7 @@ import { Suspense } from "react";
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import HomePage from "./pages/home/HomePage";
 import LostItem from "./pages/lostItem/LostItem";
+import NewLostItem from "./pages/lostItem/NewLostItem";
 import NewNotice from "./pages/notice/NewNotice";
 import Notice from "./pages/notice/Notice";
 import NoticeDetail from "./pages/notice/NoticeDetail";
@@ -29,6 +30,7 @@ const App = () => {
             <Route path="/noticeDetail" element={<NoticeDetail />} />
             <Route path="/noticeEdit" element={<NoticeEdit />} />
             <Route path="/lostItem" element={<LostItem />} />
+            <Route path="/newLostItem" element={<NewLostItem />} />
           </Routes>
         </Router>
       </Suspense>
