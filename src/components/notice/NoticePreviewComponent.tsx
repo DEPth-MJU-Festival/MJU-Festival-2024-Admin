@@ -2,13 +2,7 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { Notice } from "../../types/notice";
 
-const NoticePreviewComponent = ({
-  content,
-  page,
-}: {
-  content: Notice;
-  page: string;
-}) => {
+const NoticePreviewComponent = ({ content }: { content: Notice }) => {
   const navigator = useNavigate();
   const handleMoveNoticeDetail = () => {
     navigator(`/noticeDetail?noticeId=${content.noticeId}`);

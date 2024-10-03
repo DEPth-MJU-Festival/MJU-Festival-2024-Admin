@@ -25,7 +25,7 @@ const Notice = () => {
       {error && <ErrorMessage>오류 발생: {error.message}</ErrorMessage>}
       {noticeList.length > 0 ? (
         noticeList.map((content, index) => (
-          <NoticePreviewComponent content={content} key={index} page={page!} />
+          <NoticePreviewComponent content={content} key={index} />
         ))
       ) : (
         <NoNoticeMessage>공지사항이 없습니다.</NoNoticeMessage>
