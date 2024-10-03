@@ -1,7 +1,11 @@
+/// <reference types="vite/client" />
+
+import.meta.env.VITE_API_KEY;
+
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "https://mju-festival-2024.kro.kr/",
+  baseURL: import.meta.env.VITE_API_KEY,
 });
 
 export default api;
