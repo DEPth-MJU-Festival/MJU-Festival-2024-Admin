@@ -2,17 +2,11 @@ import { useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
 import { styled } from "styled-components";
 import { Chevron } from "../../assets";
-import { DUMMYPREVIEWPOSTS } from "../../constants/notice";
 
-/*
-    API 가 어떻게 나올지 모르겠음 페이지 전환 기능을 포함시킬 수도 있기때문에 아직 postList를 자르지 않았음.
-*/
-
-const NoticePageBar = () => {
+const NoticePageBar = ({ totalPage }: { totalPage: number }) => {
   const [searchParams, setSearchParams] = useSearchParams();
   const currentPage = searchParams.get("page");
 
-  const totalPage = DUMMYPREVIEWPOSTS.length % 6; //총 페이지 수
   const pageList = Array.from({ length: totalPage }, (_, i) => i + 1);
 
   const handleSetPage = (page: number) => {
@@ -27,9 +21,32 @@ const NoticePageBar = () => {
     }
   }, [searchParams, setSearchParams, currentPage]);
 
+  const handlePrevPage = () => {
+    if (Number(currentPage) > 1) {
+      searchParams.set(
+        "page",
+        decodeURIComponent((Number(currentPage) - 1).toString())
+      );
+      setSearchParams(searchParams);
+    }
+  };
+
+  const handleNextPage = () => {
+    if (Number(currentPage) < totalPage) {
+      searchParams.set(
+        "page",
+        decodeURIComponent((Number(currentPage) + 1).toString())
+      );
+      setSearchParams(searchParams);
+    }
+  };
+
   return (
     <Container>
-      <Chevron style={{ transform: "rotate(180deg)", cursor: "pointer" }} />
+      <Chevron
+        style={{ transform: "rotate(180deg)", cursor: "pointer" }}
+        onClick={handlePrevPage}
+      />
       {pageList.map((item, index) => {
         const page = item; // 숫자 값으로 가정
 
@@ -43,7 +60,7 @@ const NoticePageBar = () => {
           </PageText>
         );
       })}
-      <Chevron style={{ cursor: "pointer" }} />
+      <Chevron style={{ cursor: "pointer" }} onClick={handleNextPage} />
     </Container>
   );
 };

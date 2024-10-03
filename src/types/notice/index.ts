@@ -5,8 +5,18 @@ export interface Notice {
   createdDate: string;
 }
 
+interface PageInfo {
+  currentPage: number;
+  totalPage: number;
+  pageSize: number;
+  totalElements: number;
+  hasNext: boolean;
+  first: boolean;
+}
+
 interface Information {
   dataList: Notice[];
+  pageInfo: PageInfo;
 }
 
 interface NoticeResponseData {
