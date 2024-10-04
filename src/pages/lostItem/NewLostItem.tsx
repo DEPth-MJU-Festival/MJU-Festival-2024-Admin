@@ -83,7 +83,7 @@ const NewLostItem: React.FC = () => {
       <NameTitle>분실물 이름</NameTitle>
       <NameInput
         type="text"
-        placeholder="분실물 이름을 입력하세요"
+        placeholder="9자 이하로 입력하세요."
         value={itemName}
         onChange={handleNameChange}
       />
